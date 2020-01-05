@@ -23,9 +23,7 @@ export const ADD_TODO = gql`
 export const DELETE_TODO = gql`
   mutation deleteTodo($id: ID!) {
     deleteTodo(where: { id: $id }) {
-      title
       id
-      completed
     }
   }
 `

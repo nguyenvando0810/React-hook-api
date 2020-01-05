@@ -3,9 +3,10 @@ import { Table, Tag, Button } from 'antd';
 import { useQuery } from '@apollo/react-hooks'
 import { TODOS_QUERY } from '../graphql'
 import { TodoContext } from '../App';
+import loadingImg from '../loading.gif';
 
 function ListTodo() {
-  const { data } = useQuery(TODOS_QUERY)
+  const { data, loading } = useQuery(TODOS_QUERY)
   const { dispatchModal } = useContext(TodoContext)
   const columns = [
     {
@@ -20,7 +21,7 @@ function ListTodo() {
       title: 'Completed',
       dataIndex: 'completed',
       render: (completed) => {
-        return <Tag color={completed ? "#87d068" : "#f50"}>{completed ? "true" : "false"}</Tag >
+        return <Tag color={completed ? "green" : "#f50"}>{completed ? "True" : "False"}</Tag >
       }
     },
     {
@@ -38,7 +39,7 @@ function ListTodo() {
 
   return (
     <div className="todo-list">
-      <Button icon="ant-cloud" className="btn-add" onClick={() => dispatchModal({ type: "OPEN_MODAL", typeModal: "FORM_MODAL" })}> Add </Button>
+      <Button icon="ant-cloud" className="btn-add" onClick={() => dispatchModal({ type: "OPEN_MODAL", typeModal: "FORM_MODAL" })}> Create </Button>
       {data && data.todoes &&
         <Table
           bordered
@@ -48,6 +49,10 @@ function ListTodo() {
           rowKey='id'
         />
       }
+
+      <div style={{textAlign: "center"}}>
+        {loading && <img src={loadingImg} alt="logo" />}
+      </div>
     </div>
   )
 }

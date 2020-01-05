@@ -59,7 +59,7 @@ function ModalTodo() {
 
   const handleDelete = () => {
     deleteTodo({ variables: { id: modal.todo.id } })
-    openNotification('success', 'Notification Update', 'Delete Success !')
+    openNotification('success', 'Notification Delete', 'Delete Success !')
     handleCancel()
   }
 
@@ -91,7 +91,7 @@ function ModalTodo() {
 
       {(modal.typeModal === "FORM_MODAL") &&
         <Modal
-          title="Form Modal"
+          title={modal.todo ? "Edit Todo" : "Create Todo"}
           visible={modal.visible}
           onCancel={handleCancel}
           footer={[

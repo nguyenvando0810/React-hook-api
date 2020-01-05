@@ -54,7 +54,11 @@ code {
 }
 
 label {
+  display: inline-block;
   margin-bottom: 2px;
+}
+.ant-modal-content .ant-modal-footer {
+  padding: 10px 24px;
 }
 
 @keyframes App-logo-spin {
