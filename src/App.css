@@ -57,8 +57,19 @@ label {
   display: inline-block;
   margin-bottom: 2px;
 }
+
 .ant-modal-content .ant-modal-footer {
   padding: 10px 24px;
+}
+
+.wrap-action {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+}
+
+.wrap-action .search-input {
+  width: 250px;
 }
 
 @keyframes App-logo-spin {
