@@ -13,7 +13,7 @@ code {
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 200px;
   pointer-events: none;
 }
 
@@ -80,4 +80,30 @@ label {
   to {
     transform: rotate(360deg);
   }
+}
+
+.todo-list .ant-pagination {
+  margin-top: 20px;
+}
+
+.ant-pagination-item .anticon {
+  font-size: 12px;
+}
+
+.ant-pagination {
+  text-align: right;
+}
+
+.todo-list .ant-pagination-disabled {
+  color: rgba(0, 0, 0, 0.25);
+  border-color: #d9d9d9;
+  cursor: not-allowed;
+}
+
+.todo-list .ant-pagination-disabled:hover {
+  border-color: #d9d9d9;
+}
+
+.todo-list .ant-pagination-item:last-child {
+  margin-right: 0;
 }

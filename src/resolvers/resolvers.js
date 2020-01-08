@@ -8,8 +8,15 @@ export const typeDefs = gql `
 
 export const resolvers = {
   Mutation: {
-    updateBg(_, { bgcolor}) {
+    updateBg(_, { bgcolor }) {
       return bgcolor
+    }
+  },
+
+  Query: {
+    getList() {
+      console.log('xxxx');
+      return 'XXXXXXXXXX'
     }
   }
 };

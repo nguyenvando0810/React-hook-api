@@ -128,38 +128,3 @@ function ModalTodo() {
 }
 
 export default ModalTodo
-
-// : (
-//   <Modal
-//     title="Form Modal"
-//     visible={modal.visible}
-//     onCancel={handleCancel}
-//     footer={[
-//       <Button key="back" onClick={handleCancel}>Cancel</Button>,
-//       <Button key="submit" type="primary" disabled={!title.trim()} onClick={handleSave}>Save</Button>,
-//     ]}
-//   >
-//     <Form>
-//       <div className="form-control">
-//         <label>Title</label>
-//         <Input
-//           type="text"
-//           placeholder="Title ..."
-//           value={title}
-//           onChange={(e) => { setTitle(e.target.value) }}
-//           onBlur={handleBlurTitle}
-//         />
-//         {errTitle && <div className="error_message">Title cannot be empty</div>}
-//       </div>
-
-//       <div className="form-control">
-//         <label>Completed</label>&nbsp; &nbsp;
-//         <Checkbox
-//           checked={completed}
-//           disabled={!modal.todo}
-//           onChange={(e) => { setCompleted(e.target.checked) }}
-//         />
-//       </div>
-//     </Form>
-//   </Modal>
-// )
