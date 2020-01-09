@@ -37,3 +37,26 @@ export const UPDATE_TODO = gql`
     }
   }
 `
+export const IsLogin = gql`
+  query {
+    isLogin @client
+  }
+`
+
+export const COLOR_QUERY = gql`
+  query {
+    bgcolor @client
+  }
+`
+
+export const UPDATE_BG = gql`
+  mutation UpdateBg ($bgcolor: String!) {
+    updateBg(bgcolor: $bgcolor) @client
+  }
+`
+
+export const GET_LIST_CACHE = gql`
+  query getList {
+    getList @client
+  }
+`
