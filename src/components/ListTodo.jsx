@@ -60,7 +60,7 @@ function ListTodo() {
   }
 
   const handleChangeBg = () => {
-    updateBg({ variables: { bgcolor: "#52c41a" } })
+    updateBg({ variables: { bgcolor: (bgcolor === "pink" ? "#52c41a" : "pink") } })
   }
 
   const handleSearch = (e) => {
