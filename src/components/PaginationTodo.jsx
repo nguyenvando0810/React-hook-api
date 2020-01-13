@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Icon } from 'antd';
 
-function PaginationTodo({ data, todosPerPage, currentPage, handleChangeCurrentPage }) {
+function PaginationTodo({ data, todosPerPage, currentPage, handleChangeCurrentPage, lowerPageBound, upperPageBound }) {
   const [currentPagination, setCurrentPagination] = useState(1)
+  const pageNumbers = []
 
   const showNumbersPage = (data) => {
-    const pageNumbers = []
-
     for (let i = 1; i <= Math.ceil(data.length / todosPerPage); i++) {
       pageNumbers.push(i)
     }
@@ -71,6 +70,11 @@ function PaginationTodo({ data, todosPerPage, currentPage, handleChangeCurrentPa
             <Icon type="left" />
           </li>
           {showNumbersPage(data)}
+          {(pageNumbers.length > upperPageBound) &&
+            <li className={`ant-pagination-jump-next`}>
+              <Icon type="ellipsis" />
+            </li>
+          }
           <li
             className={`${(currentPagination === Math.ceil(data.length / todosPerPage)) ? "ant-pagination-disabled" : ""} ant-pagination-item`}
             onClick={handleClickPageNumbersNext}

@@ -69,7 +69,7 @@ label {
 }
 
 .wrap-action .search-input {
-  width: 250px;
+  width: 310px;
 }
 
 @keyframes App-logo-spin {
@@ -106,4 +106,13 @@ label {
 
 .todo-list .ant-pagination-item:last-child {
   margin-right: 0;
+}
+
+.ant-input-prefix {
+  font-size: 18px;
+  color: #757575 !important;
+}
+
+.ant-input-affix-wrapper .ant-input:not(:first-child) {
+  padding-left: 35px !important;
 }

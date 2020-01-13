@@ -1,22 +1,24 @@
 import React, { useContext, useState } from 'react'
-import { Table, Tag, Button, Input } from 'antd';
+import { Tag, Button } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { TODOS_QUERY, IsLogin, COLOR_QUERY, UPDATE_BG } from '../graphql'
 import { TodoContext } from '../App';
 import loadingImg from '../loading.gif';
 import PaginationTodo from './PaginationTodo';
+import Search from './Search';
+import TableCustom from './TableCustom';
 // import { useApolloClient } from "@apollo/react-hooks";
 
 function ListTodo() {
-  let todosFilter
   const todosPerPage = 5
+  const upperPageBound = 3
+  const lowerPageBound = 0
   const { data, loading } = useQuery(TODOS_QUERY)
   const { dispatchModal } = useContext(TodoContext)
   const { data: { isLogin } } = useQuery(IsLogin)
   const { data: { bgcolor } } = useQuery(COLOR_QUERY)
   const [keySearch, setKeySearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
-
   const [updateBg] = useMutation(UPDATE_BG, {
     update: (cache, { data: { updateBg } }) => {
       cache.writeQuery({
@@ -25,6 +27,10 @@ function ListTodo() {
       })
     }
   })
+
+  const handleChangeBg = () => {
+    updateBg({ variables: { bgcolor: (bgcolor === "pink" ? "#52c41a" : "pink") } })
+  }
   //const client = useApolloClient() Khai báo client, Set cache trực tiếp.
   const columns = [
     {
@@ -55,17 +61,11 @@ function ListTodo() {
     },
   ];
 
-  if (data && data.todoes) {
-    todosFilter = data.todoes.filter(todo => todo.title.toLowerCase().indexOf(keySearch.toLowerCase()) !== -1)
-  }
+  let dataFilter = ((data && data.todoes) ? data.todoes.filter(todo => todo.title.toLowerCase().indexOf(keySearch.toLowerCase()) !== -1) : [])
 
-  const handleChangeBg = () => {
-    updateBg({ variables: { bgcolor: (bgcolor === "pink" ? "#52c41a" : "pink") } })
-  }
-
-  const handleSearch = (e) => {
-    setKeySearch(e.target.value)
-    setCurrentPage(1)
+  const handleSearchList = (search) => {
+    setKeySearch(search)
+    handleChangeCurrentPage(1)
   }
 
   const showListTodo = (data) => {
@@ -77,12 +77,10 @@ function ListTodo() {
     }
 
     return (
-      <Table
-        bordered
-        align={'center'}
+      <TableCustom
+        bordered={true}
         columns={columns}
         dataSource={data.slice(indexOfFirstTodo, indexOfLastTodo)}
-        rowKey='id'
         pagination={false}
       />
     )
@@ -95,19 +93,25 @@ function ListTodo() {
   return (
     <div className="todo-list">
       <div className="wrap-action">
-        <Input className="search-input" placeholder="Search..." value={keySearch} onChange={handleSearch} />
+        <Search
+          keySearch={keySearch}
+          handleSearchList={handleSearchList}
+          data={dataFilter}
+        />
         <Button icon="ant-cloud" onClick={() => dispatchModal({ type: "OPEN_MODAL", typeModal: "FORM_MODAL" })}> Create</Button>
       </div>
 
       {data && data.todoes && (
         <>
-          {showListTodo(todosFilter)}
+          {showListTodo(dataFilter)}
 
           <PaginationTodo
-            data={todosFilter}
+            data={dataFilter}
             todosPerPage={todosPerPage}
             currentPage={currentPage}
             handleChangeCurrentPage={handleChangeCurrentPage}
+            upperPageBound={upperPageBound}
+            lowerPageBound={lowerPageBound}
           />
         </>
       )}
