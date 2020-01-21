@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Icon } from 'antd';
 
-function PaginationTodo({ data, todosPerPage, currentPage, handleChangeCurrentPage, lowerPageBound, upperPageBound }) {
+function PaginationTodo({ data, todosPerPage, currentPage, handleChangeCurrentPage }) {
   const [currentPagination, setCurrentPagination] = useState(1)
   const pageNumbers = []
+  const totalPage = Math.ceil(data.length / todosPerPage)
 
-  const showNumbersPage = (data) => {
-    for (let i = 1; i <= Math.ceil(data.length / todosPerPage); i++) {
+  const showNumbersPage = () => {
+    for (let i = 1; i <= totalPage; i++) {
       pageNumbers.push(i)
     }
 
@@ -50,41 +51,26 @@ function PaginationTodo({ data, todosPerPage, currentPage, handleChangeCurrentPa
   }
 
   const handleClickPageNumbersLastNext = () => {
-    setCurrentPagination(Math.ceil(data.length / todosPerPage))
+    setCurrentPagination(totalPage)
   }
 
   return (
     <>
       {data.length > 0 &&
         <ul className="ant-pagination">
-          <li
-            className={`${currentPagination === 1 ? "ant-pagination-disabled" : ""} ant-pagination-item`}
-            onClick={handleClickPageNumbersFirstPrev}
-          >
+          <li className={`${currentPagination === 1 ? "ant-pagination-disabled" : ""} ant-pagination-item`} onClick={handleClickPageNumbersFirstPrev}>
             <Icon type="double-left" />
           </li>
-          <li
-            className={`${currentPagination === 1 ? "ant-pagination-disabled" : ""} ant-pagination-item`}
-            onClick={handleClickPageNumbersPrev}
-          >
+          <li className={`${currentPagination === 1 ? "ant-pagination-disabled" : ""} ant-pagination-item`} onClick={handleClickPageNumbersPrev} >
             <Icon type="left" />
           </li>
-          {showNumbersPage(data)}
-          {(pageNumbers.length > upperPageBound) &&
-            <li className={`ant-pagination-jump-next`}>
-              <Icon type="ellipsis" />
-            </li>
-          }
-          <li
-            className={`${(currentPagination === Math.ceil(data.length / todosPerPage)) ? "ant-pagination-disabled" : ""} ant-pagination-item`}
-            onClick={handleClickPageNumbersNext}
-          >
+
+          {showNumbersPage()}
+
+          <li className={`${(currentPagination === totalPage) ? "ant-pagination-disabled" : ""} ant-pagination-item`} onClick={handleClickPageNumbersNext}>
             <Icon type="right" />
           </li>
-          <li
-            className={`${currentPagination === Math.ceil(data.length / todosPerPage) ? "ant-pagination-disabled" : ""} ant-pagination-item`}
-            onClick={handleClickPageNumbersLastNext}
-          >
+          <li className={`${currentPagination === totalPage ? "ant-pagination-disabled" : ""} ant-pagination-item`} onClick={handleClickPageNumbersLastNext}>
             <Icon type="double-right" />
           </li>
         </ul>

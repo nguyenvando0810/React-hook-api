@@ -11,8 +11,6 @@ import TableCustom from './TableCustom';
 
 function ListTodo() {
   const todosPerPage = 5
-  const upperPageBound = 3
-  const lowerPageBound = 0
   const { data, loading } = useQuery(TODOS_QUERY)
   const { dispatchModal } = useContext(TodoContext)
   const { data: { isLogin } } = useQuery(IsLogin)
@@ -61,7 +59,11 @@ function ListTodo() {
     },
   ];
 
-  let dataFilter = ((data && data.todoes) ? data.todoes.filter(todo => todo.title.toLowerCase().indexOf(keySearch.toLowerCase()) !== -1) : [])
+  let dataFilter = ((data && data.todoes) ? data.todoes.filter(todo =>
+    Object.keys(todo).some(key =>
+      todo[key].toString().toLowerCase().includes(keySearch.toLowerCase())
+    )
+  ) : [])
 
   const handleSearchList = (search) => {
     setKeySearch(search)
@@ -96,7 +98,7 @@ function ListTodo() {
         <Search
           keySearch={keySearch}
           handleSearchList={handleSearchList}
-          data={dataFilter}
+          placeholder="Search by title"
         />
         <Button icon="ant-cloud" onClick={() => dispatchModal({ type: "OPEN_MODAL", typeModal: "FORM_MODAL" })}> Create</Button>
       </div>
@@ -110,8 +112,6 @@ function ListTodo() {
             todosPerPage={todosPerPage}
             currentPage={currentPage}
             handleChangeCurrentPage={handleChangeCurrentPage}
-            upperPageBound={upperPageBound}
-            lowerPageBound={lowerPageBound}
           />
         </>
       )}

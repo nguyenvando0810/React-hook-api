@@ -3,7 +3,7 @@ import { Input, Icon } from 'antd';
 
 const prefix = <Icon type="search" />
 
-function Search({ keySearch, handleSearchList, handleChangeCurrentPage }) {
+function Search({ keySearch, handleSearchList, placeholder }) {
   const [search, setSearch] = useState('')
 
   useEffect(() => {
@@ -21,7 +21,7 @@ function Search({ keySearch, handleSearchList, handleChangeCurrentPage }) {
   return (
     <Input
       className="search-input"
-      placeholder="Search list todo"
+      placeholder={placeholder}
       prefix={prefix}
       allowClear
       value={search}
